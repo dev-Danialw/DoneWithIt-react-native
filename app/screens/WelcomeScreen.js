@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: "100%",
+    width: 100,
     height: 100,
   },
 
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 
   tagline: {
     fontSize: 25,
-    fontWeight: 600,
+    fontWeight: "600",
     paddingVertical: 20,
   },
 });
