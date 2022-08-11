@@ -1,6 +1,6 @@
 import React from "react";
 import Constants from "expo-constants";
-import { StyleSheet } from "react-native-web";
+import { StyleSheet } from "react-native";
 import { SafeAreaView, ShadowPropTypesIOS } from "react-native";
 
 function Screen({ children }) {
