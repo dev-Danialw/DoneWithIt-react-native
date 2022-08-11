@@ -1,25 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import ListItem from "../components/ListItem";
-import ListItemDEleteAction from "../components/ListItemDEleteAction";
+import ListItemDeleteAction from "../components/ListItemDEleteAction";
 import ListItemSeparator from "../components/ListItemSeparator";
 import Screen from "../components/Screen";
 
+const messages = [
+  {
+    id: 1,
+    title: "T1",
+    description: "D1",
+    image: require("../assets/mosh.jpg"),
+  },
+  {
+    id: 2,
+    title: "T2",
+    description: "D2",
+    image: require("../assets/mosh.jpg"),
+  },
+];
+
 function MessageScreen(props) {
-  const messages = [
-    {
-      id: 1,
-      title: "T1",
-      description: "D1",
-      image: require("../assets/mosh.jpg"),
-    },
-    {
-      id: 2,
-      title: "T2",
-      description: "D2",
-      image: require("../assets/mosh.jpg"),
-    },
-  ];
+  const [messages, setMessages] = useState(initialMessage);
+  const handleDelete = (message) => {
+    // delete the message from array
+    setMessages(messages.filter((m) => m.id !== message.id));
+
+    // delete form backend
+  };
 
   return (
     <Screen>
@@ -32,7 +40,9 @@ function MessageScreen(props) {
             subTitle={item.description}
             image={item.image}
             onPress={() => console.log("msg selected", item)}
-            renderRightActions={ListItemDEleteAction}
+            renderRightActions={() => (
+              <ListItemDeleteAction onPress={handleDelete} />
+            )}
           />
         )}
         ItemSeparatorComponent={<ListItemSeparator />}
