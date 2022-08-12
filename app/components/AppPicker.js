@@ -8,13 +8,15 @@ import {
   FlatList,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import Screen from "./Screen";
+
 import AppText from "./AppText";
-import defautStyles from "../config/styles";
+import Screen from "./Screen";
+import defaultStyles from "../config/styles";
 import PickerItem from "./PickerItem";
 
-function AppPicker({ icon, items, placeholder, ...otherProps }) {
+function AppPicker({ icon, items, onSelectItem, placeholder, selectedItem }) {
   const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
@@ -23,15 +25,17 @@ function AppPicker({ icon, items, placeholder, ...otherProps }) {
             <MaterialCommunityIcons
               name={icon}
               size={20}
-              color={defautStyles.colors.medium}
+              color={defaultStyles.colors.medium}
               style={styles.icon}
             />
           )}
-          <AppText style={styles.text}>{placeholder}</AppText>
+          <AppText style={styles.text}>
+            {selectedItem ? selectedItem.label : placeholder}
+          </AppText>
           <MaterialCommunityIcons
             name="chevron-down"
             size={20}
-            color={defautStyles.colors.medium}
+            color={defaultStyles.colors.medium}
           />
         </View>
       </TouchableWithoutFeedback>
@@ -41,7 +45,15 @@ function AppPicker({ icon, items, placeholder, ...otherProps }) {
           <FlatList
             data={items}
             keyExtractor={(item) => item.value.toString()}
-            renderItem={({ item }) => <PickerItem label={item.label} onPress={} />}
+            renderItem={({ item }) => (
+              <PickerItem
+                label={item.label}
+                onPress={() => {
+                  setModalVisible(false);
+                  onSelectItem(item);
+                }}
+              />
+            )}
           />
         </Screen>
       </Modal>
@@ -51,7 +63,7 @@ function AppPicker({ icon, items, placeholder, ...otherProps }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: defautStyles.colors.light,
+    backgroundColor: defaultStyles.colors.light,
     borderRadius: 25,
     flexDirection: "row",
     width: "100%",
