@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import ListItem from "../components/ListItem";
-import ListItemDeleteAction from "../components/ListItemDEleteAction";
-import ListItemSeparator from "../components/ListItemSeparator";
-import Screen from "../components/Screen";
 
-const messages = [
+import Screen from "../components/Screen";
+import ListItem from "../components/ListItem";
+import ListItemSeparator from "../components/ListItemSeparator";
+import ListItemDeleteAction from "../components/ListItemDeleteAction";
+
+const initialMessages = [
   {
     id: 1,
     title: "T1",
@@ -20,13 +21,13 @@ const messages = [
   },
 ];
 
-function MessageScreen(props) {
-  const [messages, setMessages] = useState(initialMessage);
+function MessagesScreen(props) {
+  const [messages, setMessages] = useState(initialMessages);
   const [refreshing, setRefreshing] = useState(false);
+
   const handleDelete = (message) => {
-    // delete the message from array
+    // Delete the message from messages
     setMessages(messages.filter((m) => m.id !== message.id));
-    // delete form backend
   };
 
   return (
@@ -39,13 +40,13 @@ function MessageScreen(props) {
             title={item.title}
             subTitle={item.description}
             image={item.image}
-            onPress={() => console.log("msg selected", item)}
+            onPress={() => console.log("Message selected", item)}
             renderRightActions={() => (
-              <ListItemDeleteAction onPress={handleDelete} />
+              <ListItemDeleteAction onPress={() => handleDelete(item)} />
             )}
           />
         )}
-        ItemSeparatorComponent={<ListItemSeparator />}
+        ItemSeparatorComponent={ListItemSeparator}
         refreshing={refreshing}
         onRefresh={() => {
           setMessages([
@@ -64,4 +65,4 @@ function MessageScreen(props) {
 
 const styles = StyleSheet.create({});
 
-export default MessageScreen;
+export default MessagesScreen;

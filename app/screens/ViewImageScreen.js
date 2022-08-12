@@ -28,13 +28,13 @@ function ViewImageScreen() {
 const styles = StyleSheet.create({
   closeIcon: {
     position: "absolute",
-    top: 40,
+    top: 15,
     left: 30,
   },
 
   deleteIcon: {
     position: "absolute",
-    top: 40,
+    top: 15,
     right: 30,
   },
 
