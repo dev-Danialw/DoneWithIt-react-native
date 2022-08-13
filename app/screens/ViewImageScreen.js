@@ -1,9 +1,10 @@
-import React, { Component } from "react";
-import { Image, View, StyleSheet } from "react-native";
+import React from "react";
+import { Image, StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import colors from "../config/colors";
 
-function ViewImageScreen() {
+function ViewImageScreen(props) {
   return (
     <View style={styles.container}>
       <View style={styles.closeIcon}>
@@ -18,8 +19,8 @@ function ViewImageScreen() {
       </View>
       <Image
         resizeMode="contain"
-        source={require("../assets/chair.jpg")}
         style={styles.image}
+        source={require("../assets/chair.jpg")}
       />
     </View>
   );
@@ -28,21 +29,18 @@ function ViewImageScreen() {
 const styles = StyleSheet.create({
   closeIcon: {
     position: "absolute",
-    top: 15,
+    top: 40,
     left: 30,
   },
-
-  deleteIcon: {
-    position: "absolute",
-    top: 15,
-    right: 30,
-  },
-
   container: {
     backgroundColor: colors.black,
     flex: 1,
   },
-
+  deleteIcon: {
+    position: "absolute",
+    top: 40,
+    right: 30,
+  },
   image: {
     width: "100%",
     height: "100%",
