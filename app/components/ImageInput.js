@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -6,9 +6,10 @@ import {
   TouchableWithoutFeedback,
   Alert,
 } from "react-native";
-import colors from "../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+
+import colors from "../config/colors";
 
 function ImageInput({ imageUri, onChangeImage }) {
   useEffect(() => {
@@ -16,8 +17,8 @@ function ImageInput({ imageUri, onChangeImage }) {
   }, []);
 
   const requestPermission = async () => {
-    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
-    if (!granted) alert("You need to enable permission to access the image.");
+    const { granted } = await ImagePicker.requestCameraRollPermissionsAsync();
+    if (!granted) alert("You need to enable permission to access the library.");
   };
 
   const handlePress = () => {
@@ -37,18 +38,18 @@ function ImageInput({ imageUri, onChangeImage }) {
       });
       if (!result.cancelled) onChangeImage(result.uri);
     } catch (error) {
-      console.log("Error reading an image"), error;
+      console.log("Error reading an image", error);
     }
   };
 
   return (
-    <TouchableWithoutFeedback onPress={hanldePress}>
+    <TouchableWithoutFeedback onPress={handlePress}>
       <View style={styles.container}>
         {!imageUri && (
           <MaterialCommunityIcons
+            color={colors.medium}
             name="camera"
             size={40}
-            colors={colors.medium}
           />
         )}
         {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
@@ -64,12 +65,14 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 100,
     justifyContent: "center",
+    marginVertical: 10,
     overflow: "hidden",
     width: 100,
   },
   image: {
-    width: "100%",
     height: "100%",
+    width: "100%",
   },
 });
+
 export default ImageInput;
